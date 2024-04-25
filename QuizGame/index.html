@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nigeria XR Quiz Game</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.4/dist/aframe-environment-component.min.js"></script>
+    <script type="module" src="js/questions-panel.js"></script>
+
+    <style>
+        #confetti-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+            z-index: 9999; /* Make sure confetti appears on top */
+        }
+        .confetti {
+            position: absolute;
+            will-change: transform, opacity, height, width;
+        }
+    </style>
+      
+</head>
+<body>
+    <a-scene>
+        <a-entity environment="preset: forest;"
+        cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable"></a-entity>
+
+        <a-assets>
+            <img id="history-icon" src="assets/icons/nigeria_5703549.png">
+            <img id="culture-icon" src="assets/icons/teamwork_3131333.png">
+            <img id="general-icon" src="assets/icons/golden_capsule.png">
+            <img id="music-icon" src="assets/icons/headphone_2593916.png">
+            <img id="art-icon" src="assets/icons/painting_7081812.png">
+            <audio id="cheer-sound" src="assets/audio/cheering.mp3"></audio>
+
+            <a-mixin id="frame" geometry="primitive: plane; width: 0.5783552; height: 0.8192" material="color: black; shader: flat"></a-mixin>
+            <a-mixin id="poster" geometry="primitive: plane; width: 0.544768; height: 0.786432; depth: 0.038" material="shader: flat"></a-mixin>
+            <a-mixin id="categoryImage" geometry="primitive: plane; width: 2; height: 1" material="shader: flat; transparent: true"></a-mixin>
+            <a-mixin id="answer-box" geometry="primitive: box; depth: 0.1; height: 0.3; width: 1" scale="0.9 0.58 1" material="opacity: 0.8"></a-mixin>
+            <a-mixin id="answer-text" text="align: center; width: 1.9; zOffset: 0.201; baseline: center" position="0 0.15 0.05"></a-mixin>
+            <a-mixin id="question-text" text="color: #FFF; align: center; width: 2.01" position="0 -0.1309 0" scale="1 1 0.56"></a-mixin>
+        </a-assets>
+        <a-entity position="0 1.6 0" camera look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: true"></a-entity>
+
+        <!-- Hand controls -->
+        <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
+        <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+
+
+        <!-- Back to Main Menu Button -->
+      <a-box position="1.63045 2.71478 -1.949" rotation="" width="2" height="0.6" depth="0.1" color="#2c5b2d" class="clickable raycastable" onclick="window.location.href='../index.html';" material="width: 511.62" geometry="width: 0.83; height: 0.31; depth: 0.04">
+        <a-text value="Back to Menu" align="center" width="2" color="#FFFFFF" position="0 0 0.05" text=""></a-text>
+        </a-box>
+
+
+        <!-- Category menu -->
+        <a-entity id="menu" position="0 1.6 -2.5">
+            <!-- History capsule -->
+            <a-entity id="historyButton" class="clickable raycastable menu-button" position="-2 0 0" mixin="frame">
+                <a-entity material="src: #history-icon" mixin="poster" geometry="width: 0.545; height: 0.786" position="0.05162 0 0.12"></a-entity>
+                <a-text value="History" position="0 -0.5 0" align="center" width="3"></a-text>
+            </a-entity>
+    
+            <!-- Cultures capsule -->
+            <a-entity id="culturesButton" class="clickable raycastable menu-button" position="-1 0 0" mixin="frame">
+                <a-entity material="src: #history-icon" mixin="poster" geometry="width: 0.545; height: 0.786" position="0.02546 0 0.12"></a-entity>
+                <a-text value="Cultures" position="0 -0.5 0" align="center" width="3"></a-text>
+            </a-entity>
+
+
+            <!-- General information capsule -->
+            <a-entity id="generalButton" class="clickable raycastable menu-button" position="0 0 0" mixin="frame">
+                <a-entity material="src: #general-icon; npot: true;" mixin="poster" geometry="width: 0.545; height: 0.786" position="0 0 0.12"></a-entity>
+                <a-text value="General" position="0 -0.5 0" align="center" width="3"></a-text>
+            </a-entity>
+    
+            <!-- Art capsule -->
+            <a-entity id="artButton" class="clickable raycastable menu-button" position="1 0 0" mixin="frame">
+                <a-entity material="src: #art-icon; npot: true;" mixin="poster" geometry="width: 0.545; height: 0.786" position="-0.02546 0 0.12"></a-entity>
+                <a-text value="Art" position="0 -0.5 0" align="center" width="3"></a-text>
+            </a-entity>
+
+            <!-- Music capsule -->
+            <a-entity id="musicButton" class="clickable raycastable menu-button" position="2 0 0" mixin="frame">
+                <a-entity material="src: #music-icon; npot: true;" mixin="poster" geometry="width: 0.545; height: 0.786" position="-0.06073 0 0.12"></a-entity>
+                <a-text value="Music" position="0 -0.5 0" align="center" width="3"></a-text>
+            </a-entity>
+        </a-entity>
+
+        <!-- Questions panel of the selected category -->
+        <a-entity id="questionPanel" questions-panel position="-0.11338 1.6 -2" visible="false" geometry="primitive: plane; width: 2; height: 1.5" material="color: #000000; shader: flat" scale="1.19 1.3 1">
+            <a-entity id="question-image" geometry="primitive: plane; width: 1.38; height: 0.59" position="0.01511 0.221 0.61119" material="shader: flat" scale="0.75 0.82 1"></a-entity>
+            <a-entity id="question" mixin="question-text" text="value: Question?"></a-entity>
+            <a-box id="answer1" class="clickable raycastable" position="-0.49587 -0.33752 0" mixin="answer-box answer-text" color="#4CAF50" text="value: option 1;"></a-box>
+            <a-box id="answer2" class="clickable raycastable" position="0.47623 -0.33993" mixin="answer-box answer-text" color="#F44336" text="value: option 2;"></a-box>
+            <a-box id="answer3" class="clickable raycastable" position="-0.49587 -0.6025 0" mixin="answer-box answer-text" color="#2196F3" text="value: option 3;"></a-box>
+            <a-box id="answer4" class="clickable raycastable" position="0.47623 -0.6025" mixin="answer-box answer-text" color="#DDDDDD" text="value: option 4;"></a-box>
+        </a-entity>
+
+        <!-- Progress Bar Container -->
+        <a-entity id="progressBar" position="0 2.71478 -2">
+            <!-- Dynamically generate segments via JavaScript -->
+        </a-entity>
+
+        <!-- Score Summary Panel -->
+        <a-entity id="scoreSummaryPanel" position="0 1.6 -2" visible="false" geometry="primitive: plane; width: 4; height: 1" material="color: #000000; shader: flat">
+            <a-text id="scoreSummaryText" text="value: ; align: center; width: 4" position="0 0 0.05" color="#FFFFFF"></a-text>
+        </a-entity>
+
+        <!-- Define multiple boxes for the celebration effect -->
+        <a-box id="celebration-box-1" position="-0.8 0.85467 -1.8" color="#2c5b2d" visible="false" scale="0.4 0.4 0.4"></a-box>
+        <a-box id="celebration-box-2" position="0 0.85467 -1.8" color="#FFFFFF" visible="false" scale="0.4 0.4 0.4"></a-box>
+        <a-box id="celebration-box-3" position="0.8 0.85467 -1.8" color="#2c5b2d" visible="false" scale="0.4 0.4 0.4"></a-box>
+        <!-- Add more boxes as needed -->
+        
+          <!-- Sound Entity -->
+        <a-entity id="celebration-sound" sound="src: #cheer-sound; autoplay: false;"></a-entity>
+    </a-scene>
+    <div id="confetti-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
+</html>
