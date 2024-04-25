@@ -40,13 +40,18 @@
     </style>
 </head>
 <body>
-    <a-scene>
-        <a-entity environment="preset: forest;"></a-entity>
-   
-    <div id="menu">
-        <button onclick="window.location = 'infoCapsules/index.html';">Information Capsules Mode</button>
-        <button onclick="window.location = 'QuizGame/index.html';">Quiz Game Mode</button>
-    </div>
-    </a-scene>
+   <a-scene>
+    <a-entity environment="preset: forest;"></a-entity>
+    <a-entity id="menu" position="0 1.6 -3">
+        <!-- Information Capsules Button -->
+        <a-box position="-1 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'infoCapsules/index.html';">
+            <a-text value="Information Capsules Mode" color="#FFF" align="center" width="4"></a-text>
+        </a-box>
+        <!-- Quiz Game Button -->
+        <a-box position="1 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'QuizGame/index.html';">
+            <a-text value="Quiz Game Mode" color="#FFF" align="center" width="4"></a-text>
+        </a-box>
+    </a-entity>
+</a-scene>
 </body>
 </html>
