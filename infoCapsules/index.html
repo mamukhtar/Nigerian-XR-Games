@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Nigerian Information Capsules</title>
+    <meta name="description" content="Nigerian Information Capsules • A-Frame">
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.4/dist/aframe-environment-component.min.js"></script>
+    <script src="js/highlight.js"></script>
+    <script src="js/info-panel.js"></script>
+  </head>
+  <body>
+    <a-scene
+      environment="preset: forest;"
+      cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable"
+      info-message="htmlSrc: #messageText">
+      <a-assets>
+         <img id="facts-icon" src="assets/images/funfacts.png">
+         <img id="general-icon" src="assets/icons/nigeria_5703549.png">
+         <img id="food-icon" src="assets/images/food.png">
+         <img id="art-icon" src="assets/images/art.png">
+         <img id="history-icon" src="assets/images/history.png">
+         <img id="music-icon" src="assets/images/music.png">
+         <img id="culture-icon" src="assets/images/cultures.png">
+         <img id="states-icon" src="assets/images/states.png">
+         <img id="influence-icon" src="assets/images/influence.png">
+
+
+         <!-- <video id="food-icon" src="assets/videos/food_video.mp4" autoplay loop muted></video> -->
+     
+         <!-- Icons for info Modes -->
+         <img id="fun-facts-capsule" src="assets/icons/golden_capsule.png">
+         <img id="general-capsule" src="assets/icons/capsule1.png">
+         <img id="art-capsule" src="assets/icons/capsule1.png">
+         <img id="music-capsule" src="assets/icons/capsule1.png">
+         <img id="history-capsule" src="assets/icons/capsule1.png">
+         <img id="food-capsule" src="assets/icons/capsule1.png">
+         <img id="culture-capsule" src="assets/icons/capsule1.png">
+         <img id="states-capsule" src="assets/icons/capsule1.png">
+         <img id="influence-capsule" src="assets/icons/capsule1.png">
+        <a-mixin
+          id="frame"
+          geometry="primitive: plane; width: 0.5783552; height: 0.8192"
+          material="color: white; shader: flat"
+          animation__scale="property: scale; to: 1.2 1.2 1.2; dur: 200; startEvents: mouseenter"
+          animation__scale_reverse="property: scale; to: 1 1 1; dur: 200; startEvents: mouseleave"
+         ></a-mixin>
+         <a-mixin
+          id="poster"
+          geometry="primitive: plane; width: 0.544768; height: 0.786432"
+          material="color: white; shader: flat"
+          material="shader: flat"
+          position="0 0 0.005"
+         ></a-mixin>
+         <a-mixin
+          id="categoryImage"
+          geometry="primitive: plane; width: 2; height: 1"
+          material="src: #general-icon; shader: flat; transparent: true"
+          position="0 0.495 0.002"
+         ></a-mixin>
+      </a-assets>
+
+      <a-entity
+        id="background"
+        position="0 0 0"
+        geometry="primitive: sphere; radius: 2.0"
+        material="color: red; side: back; shader: flat"
+        scale="0.001 0.001 0.001"
+        visible="false" class="raycastable">
+      </a-entity>
+
+      <a-entity
+        position="0 1.6 0.4"
+        camera look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: true">
+        <a-entity
+          id="fadeBackground"
+          geometry="primitive: sphere; radius: 2.5"
+          material="color: black; side: back; shader: flat; transparent: true; opacity: 0.2" visible="false">
+        </a-entity>
+      </a-entity>
+
+      <!-- Hand controls -->
+      <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
+      <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+
+      <!-- Back to Main Menu Button -->
+      <a-box position="2.3 3 -1.94914" rotation="" width="2" height="0.6" depth="0.1" color="#2c5b2d" class="clickable raycastable" onclick="window.location.href='../index.html';" material="width: 511.62" geometry="width: 0.83; height: 0.31; depth: 0.04">
+        <a-text value="Back to Menu" align="center" width="2" color="#FFFFFF" position="0 0 0.05" text=""></a-text>
+        </a-box>
+
+      <a-entity id="ui" position="0 1.6 -2.5">
+        <!-- Poster menu -->
+        <a-entity id="menu" highlight>
+
+          <!-- History capsule -->
+          <a-entity id="historyButton" position="-3.2 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #history-capsule" mixin="poster"></a-entity>
+            <a-text value="History" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+
+          <!-- States capsule -->
+          <a-entity id="statesButton" position="-2.4 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #states-capsule" mixin="poster"></a-entity>
+            <a-text value="States" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+    
+          <!-- Cultures capsule -->
+          <a-entity id="cultureButton" position="-1.6 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #culture-capsule" mixin="poster"></a-entity>
+            <a-text value="Cultures" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+
+          <!-- Food capsule -->
+          <a-entity id="foodButton" position="-0.8 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #food-capsule;" mixin="poster"></a-entity>
+            <a-text value="Food" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+
+          <!-- fun facts capsule -->
+          <a-entity id="factsButton" position="0 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #fun-facts-capsule;" mixin="poster"></a-entity>
+            <a-text value="Fun Facts" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+
+          <!-- General information capsule -->
+          <a-entity id="generalButton" position="0.8 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #general-capsule" mixin="poster"></a-entity>
+            <a-text value="General" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+    
+          <!-- Art capsule -->
+          <a-entity id="artButton" position="1.6 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #art-capsule" mixin="poster"></a-entity>
+            <a-text value="Art" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+
+          <!-- Music capsule -->
+          <a-entity id="musicButton" position="2.4 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #music-capsule" mixin="poster"></a-entity>
+            <a-text value="Music" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+    
+           <!-- Global Influence capsule -->
+           <a-entity id="influenceButton" position="3.2 0 0" mixin="frame" class="raycastable menu-button">
+            <a-entity material="src: #influence-capsule" mixin="poster"></a-entity>
+            <a-text value="Global Influence" position="0 -0.5 0" align="center" width="3"></a-text>
+          </a-entity>
+    
+      </a-entity>
+
+      <!-- Info panel of the selected movie. -->
+      <a-entity
+      id="infoPanel"
+      position="0 0 0.5"
+      info-panel
+      visible="false"
+      scale="0.001 0.001 0.001"
+      geometry="primitive: plane; width: 2; height: 3.5"
+      material="color: #000000; shader: flat; transparent: false" class="raycastable">
+      <a-entity id="factsImage" position="0 1.01243 0" mixin="categoryImage" material="src: #facts-icon" visible="false" scale="1 1.48 1" ></a-entity>
+      <a-entity id="foodImage" position="0 1.01243 0" mixin="categoryImage" material="src: #food-icon" visible="false" scale="1 1.48 1"></a-entity>     
+      <a-entity id="cultureImage" position="0 1.01243 0" mixin="categoryImage" material="src: #culture-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="generalImage" position="0 1.01243 0" mixin="categoryImage" material="src: #general-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="artImage" position="0 1.01243 0" mixin="categoryImage" material="src: #art-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="historyImage" position="0 1.01243 0" mixin="categoryImage" material="src: #history-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="musicImage" position="0 1.01243 0" mixin="categoryImage" material="src: #music-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="statesImage" position="0 1.01243 0" mixin="categoryImage" material="src: #states-icon" visible="false" scale="1 1.48 1"></a-entity>
+      <a-entity id="influenceImage" position="0 1.01243 0" mixin="categoryImage" material="src: #influence-icon" visible="false" scale="1 1.48 1"></a-entity>
+
+
+      <a-entity id="Category"
+        position="-0.92 0.119 0"
+        text="shader: msdf; anchor: left; width: 2; font: https://cdn.aframe.io/examples/ui/Viga-Regular.json; color: white; value: Ponyo (2003)"></a-entity>
+      <a-entity id="categoryDescription"
+        position="-0.9 0.05875 0.04558"
+        text="baseline: top; shader: msdf; anchor: left; width: 1.8; wrapCount: 67.1; font: https://cdn.aframe.io/examples/ui/Viga-Regular.json; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></a-entity>
+      </a-entity>
+    </a-scene>
+    
+  </body>
+</html>
