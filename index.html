@@ -41,17 +41,26 @@
 </head>
 <body>
    <a-scene>
-    <a-entity environment="preset: forest;"></a-entity>
-    <a-entity id="menu" position="0 1.6 -3">
-        <!-- Information Capsules Button -->
-        <a-box position="-1 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'infoCapsules/index.html';">
-            <a-text value="Information Capsules Mode" color="#FFF" align="center" width="4"></a-text>
-        </a-box>
-        <!-- Quiz Game Button -->
-        <a-box position="1 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'QuizGame/index.html';">
-            <a-text value="Quiz Game Mode" color="#FFF" align="center" width="4"></a-text>
-        </a-box>
-    </a-entity>
-</a-scene>
+        <a-camera position="0 1.6 0">
+            <a-cursor 
+                color="yellow"
+                fuse="true"
+                fuse-timeout="1500">
+            </a-cursor>
+        </a-camera>
+        
+        <a-entity environment="preset: forest;"></a-entity>
+        <a-entity id="menu" position="0 1.6 -3">
+            <!-- Information Capsules Button -->
+            <a-box position="-1.2 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'infoCapsules/index.html';">
+                <a-text value="Information Capsules Mode" position="0 0 0.1" color="#FFF" align="center" width="3.53"></a-text>
+            </a-box>
+            <!-- Quiz Game Button -->
+            <a-box position="1.2 0 0" depth="0.2" height="0.5" width="2" color="#2c5b2d" onclick="window.location = 'QuizGame/index.html';">
+                <a-text value="Quiz Game Mode" position="0 0 0.1" color="#FFF" align="center" width="3.53"></a-text>
+            </a-box>
+        </a-entity>
+    </a-scene>
+    
 </body>
 </html>
